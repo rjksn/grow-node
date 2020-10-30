@@ -18,6 +18,5 @@ processedImgFilename = "{}/dvi-{}.png".format(imageDirectory, preProcess.timesta
 ndviProcess.ndvi(imgResizeFilePath, processedImgFilename, processedImgFilename)
 
 while not os.path.exists(processedImgFilename):
-    print("Fil processeras")
     time.sleep(5)
 
