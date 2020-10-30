@@ -106,7 +106,5 @@ def ndvi(image, processedImgFilename, imageOutPath):
     redBlueSum[redBlueSum ==0] = 0.01
     arrNDVI = redBlueDiff/redBlueSum
 
-    plt.imsave(imageOutPath+".png", arrNDVI, vmin=-1.0, vmax=1.0)
-
     fastiecm=LinearSegmentedColormap.from_list('mylist', colors) 
     plt.imsave(imageOutPath, arrNDVI, cmap=fastiecm, vmin=-1.0, vmax=1.0)
