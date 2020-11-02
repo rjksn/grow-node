@@ -2,6 +2,8 @@ from gpiozero import CPUTemperature
 import board
 import adafruit_dht
 import time
+import datetime
+now = datetime.datetime.utcnow()
 
 try:
     dhtDevice = adafruit_dht.DHT11(board.D4)
@@ -12,7 +14,7 @@ except RuntimeError as e:
     sensor1_temp = "null"
     sensor1_humidity = "null"
 
-values = [int(time.time()), CPUTemperature().temperature,
+values = [now.strftime('%Y-%m-%d %H:%M:%S'), CPUTemperature().temperature,
                     sensor1_temp, sensor1_humidity]
 
 print("{},{},{},{}".format(*values))
