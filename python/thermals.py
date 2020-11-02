@@ -9,8 +9,8 @@ try:
     sensor1_humidity = dhtDevice.humidity
 except RuntimeError as e:
     # RuntimeError: DHT sensor not found, check wiring
-    sensor1_temp = ""
-    sensor1_humidity = ""
+    sensor1_temp = "null"
+    sensor1_humidity = "null"
 
 values = [int(time.time()), CPUTemperature().temperature,
                     sensor1_temp, sensor1_humidity]
