@@ -17,4 +17,4 @@ except RuntimeError as e:
 values = [now.strftime('%Y-%m-%d %H:%M:%S'), CPUTemperature().temperature,
                     sensor1_temp, sensor1_humidity]
 
-print("{},{},{},{}".format(*values))
+print("'{}',{},{},{}".format(*values))
