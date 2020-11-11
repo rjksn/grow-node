@@ -7,7 +7,7 @@ class TakePicture:
     # redAWB=2.26
     redAWB=1.75
     # blueAWB=0.74
-    redAWB=0.27
+    blueAWB=0.27
 
     customGains = (redAWB, blueAWB)
     camera.awb_mode = "off"
