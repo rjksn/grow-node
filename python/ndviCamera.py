@@ -20,8 +20,8 @@ class Camera:
 
     def capture(self, path):
         imagepath = "{}/test-AWB.png".format(path)
-        time.sleep(3)
+        # time.sleep(3)
         self.camera.capture(imagepath, "png")
         self.camera.close()
         
-        return self.path
+        return imagepath
