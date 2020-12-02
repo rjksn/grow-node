@@ -1,22 +1,25 @@
-from ndviTakeImage import TakePicture
-from ndviPreProcess import PreProcess
-import ndviProcess 
 import os
+from ndviCamera import Camera
+from ndviProcess import ndviTensorFromImage
+from ndviColors import fastiecm
+from PIL import Image
 import time
-import signal
+import matplotlib.pyplot as plt
 
-scriptDirectory = os.path.dirname(os.path.realpath(__file__))
-imageDirectory = f"{scriptDirectory}/../data/images"
 
-camera = TakePicture()
-imageFilename = camera.capture(imageDirectory)
+SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
+OUTPUT_PATH = f"{SCRIPT_PATH}/../data/images"
+TIMESTAMP = time.strftime("-%Y-%m-%d-%H")
 
-preProcess = PreProcess(imageDirectory, imageFilename)
-imgResizeFilePath = preProcess.resize()
 
-processedImgFilename = "{}/dvi-{}.png".format(imageDirectory, preProcess.timestamp)
-ndviProcess.ndvi(imgResizeFilePath, processedImgFilename, processedImgFilename)
+camera = Camera()
+imageFilename = camera.capture(OUTPUT_PATH)
 
-while not os.path.exists(processedImgFilename):
-    time.sleep(5)
+with Image.open(imageFilename) as image:
+    resized_image = image.resize((800,600), Image.LANCZOS)
+
+resized_image.save(f"{OUTPUT_PATH}/resized{TIMESTAMP}.jpg", "jpg")
+
+plt.imsave(f"{OUTPUT_PATH}/ndvi{TIMESTAMP}.jpg", 
+        ndviTensorFromImage(resized_image), cmap=fastiecm, vmin=-1.0, vmax=1.0)
 
