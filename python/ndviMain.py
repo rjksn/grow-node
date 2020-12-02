@@ -18,7 +18,7 @@ imageFilename = camera.capture(OUTPUT_PATH)
 with Image.open(imageFilename) as image:
     resized_image = image.resize((800,600), Image.LANCZOS)
 
-resized_image.save(f"{OUTPUT_PATH}/resized{TIMESTAMP}.jpg", "JPEG")
+resized_image.convert('RGB').save(f"{OUTPUT_PATH}/resized{TIMESTAMP}.jpg", "JPEG")
 
 plt.imsave(f"{OUTPUT_PATH}/ndvi{TIMESTAMP}.jpg",
         ndviTensorFromImage(resized_image), cmap=fastiecm, vmin=-1.0, vmax=1.0)
