@@ -1,7 +1,4 @@
-from PIL import Image
 import numpy as numpy
-import matplotlib
-matplotlib.use('Agg')
 
 def ndviTensorFromImage(image):
     imageChannelRed, _, imageChannelBlue, _ = image.split()
