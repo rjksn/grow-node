@@ -1,5 +1,6 @@
 import time
 from picamera import PiCamera
+from collections import namedtuple
 
 Gains = namedtuple('Gains', ['redAWB', 'blueAWB'])
 
