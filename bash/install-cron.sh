@@ -9,6 +9,6 @@ chmod +x /etc/init.d/grow-node-startup
 
 # Install Cron Jobs
 touch /etc/cron.d/grow-node
-echo "0 * * * * root bash /home/pi/grow-node/bash/cron-hour.sh" >> /etc/cron.d/grow-node
-echo "* * * * * root bash ${DIR}/bash/cron-thermals.sh"         >> /etc/cron.d/grow-node
+echo "0 * * * * root bash ${DIR}/bash/cron-hour.sh"     >> /etc/cron.d/grow-node
+echo "* * * * * root bash ${DIR}/bash/cron-thermals.sh" >> /etc/cron.d/grow-node
 chmod +x /etc/init.d/grow-node
