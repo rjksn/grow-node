@@ -24,7 +24,8 @@ def track(cloud=None):
     if request.method == 'POST':
         name = request.form['name']
         value = request.form['value']
-        return f"{name} : {value}"
+        enabled = 'enabled' if cloud.enabled() else 'disabled'
+        return f"{name} : {value} {enabled}"
     return "POST name=value="
 
 if __name__ == '__main__':
