@@ -24,7 +24,8 @@ def track():
     if request.method == 'POST':
         name = request.form['name']
         value = request.form['value']
-        print(f"{name} : {value}")
+        return f"{name} : {value}"
+    return "POST name=value="
 
 if __name__ == '__main__':
     app.run()
