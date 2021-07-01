@@ -18,7 +18,7 @@ def hello():
     return "Hello World!"
 
 
-@app.route('/track')
+@app.route('/track', methods = ['POST', 'GET'])
 @CloudIot(CONFIG_LOCATION)
 def track():
     if request.method == 'POST':
