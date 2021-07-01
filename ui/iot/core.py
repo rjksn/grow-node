@@ -15,7 +15,6 @@
 """Python Library for connecting to Google Cloud IoT Core via MQTT, using JWT.
 """
 
-# import argparse
 import configparser
 import datetime
 import json
@@ -24,7 +23,6 @@ import logging
 import os
 import paho.mqtt.client as mqtt
 import threading
-# import time
 
 logger = logging.getLogger(__name__)
 
@@ -116,9 +114,8 @@ class CloudIot:
     def __call__(self, f):
         def wrapped_f(*args, **kwargs):
             print("about to call")
-            # kwargs['cloud'] = self
+            kwargs['cloud'] = self
             return f(*args, **kwargs)
-            print("done calling")
         return wrapped_f
 
     def __enter__(self):

@@ -20,7 +20,7 @@ def hello():
 
 @app.route('/track', methods = ['POST', 'GET'])
 @CloudIot(CONFIG_LOCATION)
-def track():
+def track(cloud=None):
     if request.method == 'POST':
         name = request.form['name']
         value = request.form['value']
