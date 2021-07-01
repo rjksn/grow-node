@@ -117,7 +117,7 @@ class CloudIot:
         def wrapped_f(*args, **kwargs):
             print("about to call")
             # kwargs['cloud'] = self
-            f(*args, **kwargs)
+            return f(*args, **kwargs)
             print("done calling")
         return wrapped_f
 
