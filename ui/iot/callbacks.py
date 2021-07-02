@@ -47,7 +47,7 @@ def on_unsubscribe(unused_client, unused_userdata, unused_mid):
     """Paho callback when a message is sent to the broker."""
     print('on_unsubscribe')
 
-def create_callback(enviro):
+def create_callback():
     callbacks = {
         'on_message' : on_message,
         'on_connect' : on_connect,

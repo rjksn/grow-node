@@ -24,6 +24,8 @@ import os
 import paho.mqtt.client as mqtt
 import threading
 
+from iot.callbacks import create_callback
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG_LOCATION = os.path.join(os.path.dirname(__file__), '../cloud_config.ini')
@@ -111,6 +113,9 @@ class CloudIot:
         # Subscribe to the commands topic, QoS 1 enables message acknowledgement.
         self._client.subscribe(mqtt_command_topic, qos=1)
 
+        self.register_message_callbacks(create_callback())
+
+
     def __call__(self, f):
         def wrapped_f(*args, **kwargs):
             print("about to call")
@@ -146,7 +151,6 @@ class CloudIot:
         """
         if not self._enabled:
             return
-
         with self._mutex:
             # Publish to the events or state topic based on the flag.
             sub_topic = 'events' if self._message_type == 'event' else 'state'
