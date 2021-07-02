@@ -187,8 +187,8 @@ class CloudIot:
         if 'on_log' in callbacks:
             self._client.on_log = callbacks['on_log']
 
-
     def _token_update_loop(self, term_event):
+        # Run in threads
         # Update token every 50 minutes (of allowed 60).
         while not term_event.wait(50 * 60):
             with self._mutex:
