@@ -1,8 +1,8 @@
 import os
 import logging
+from datetime import datetime as dt
 
-from flask import Flask
-from flask import request
+from flask import Flask, request
 app = Flask(__name__)
 
 from iot.core import CloudIot
@@ -35,12 +35,13 @@ def track(cloud=None):
         enabled = 'enabled' if cloud.enabled() else 'disabled'
 
         messages = []
+        now = dt.now()
         for name, value in zip(names, values):
-            messages.append((f"sensor_{name}", float(value)))
+            messages.append((now, f"sensor_{name}", float(value)))
+        cloud.publish_messages(messages)
 
-        cloud.publish_message(messages)
+        return f"Connection: {enabled}\n" + "\n".join(["{} : {:.2f}".format(*param[1:]) for param in messages])
 
-        return f"Connection: {enabled}\n" + "\n".join(["{} : {:.2f}".format(*param) for param in messages])
     return "POST data as name=value= or name[]=value[]="
 
 if __name__ == '__main__':

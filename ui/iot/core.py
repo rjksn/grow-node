@@ -52,7 +52,6 @@ class CloudIot:
             self._enabled = False
             return
 
-
         if not self._config.getboolean(config_section, 'Enabled'):
             logger.warn('Cloud IoT is disabled per configuration.')
             self._enabled = False
@@ -115,8 +114,10 @@ class CloudIot:
 
         self.register_message_callbacks(create_callback())
 
-
     def __call__(self, f):
+        '''
+        Decorator Function
+        '''
         def wrapped_f(*args, **kwargs):
             print("about to call")
             kwargs['cloud'] = self
@@ -124,6 +125,9 @@ class CloudIot:
         return wrapped_f
 
     def __enter__(self):
+        '''
+        Context Manager
+        '''
         return self
 
     def __exit__(self, exception_type, exception_value, traceback):
@@ -140,6 +144,13 @@ class CloudIot:
             True if Cloud Iot Core is enabled, False if it's disabled.
         """
         return self._enabled
+
+    def publish_messages(self, messages):
+        """
+        Sends an arbitrary message to the Cloud Iot Core service.
+        """
+        for message in messages:
+            self.publish_message(message)
 
     def publish_message(self, message):
         """

@@ -1,10 +1,8 @@
 import paho.mqtt.client as mqtt
 
-# [START iot_mqtt_config]
 def error_str(rc):
     """Convert a Paho error to a human readable string."""
     return '{}: {}'.format(rc, mqtt.error_string(rc))
-
 
 def on_connect(unused_client, unused_userdata, unused_flags, rc):
     """Callback for when a device connects."""
@@ -16,7 +14,6 @@ def on_connect(unused_client, unused_userdata, unused_flags, rc):
     should_backoff = False
     minimum_backoff_time = 1
 
-
 def on_disconnect(unused_client, unused_userdata, rc):
     """Paho callback for when a device disconnects."""
     print('on_disconnect', error_str(rc))
@@ -25,7 +22,6 @@ def on_disconnect(unused_client, unused_userdata, rc):
     # exponential backoff.
     global should_backoff
     should_backoff = True
-
 
 def on_publish(unused_client, unused_userdata, unused_mid):
     """Paho callback when a message is sent to the broker."""
@@ -38,13 +34,14 @@ def on_message(unused_client, unused_userdata, message):
             payload, message.topic, str(message.qos)))
 
 def on_log(unused_client, unused_userdata, message):
-    """Callback when the device receives a message on a subscription."""
-    payload = str(message.payload.decode('utf-8'))
-    print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
-            payload, message.topic, str(message.qos)))
+    """Callback when ___."""
+    print('on_publish')
+    # payload = str(message.payload.decode('utf-8'))
+    # print('Received log \'{}\' on topic \'{}\' with Qos {}'.format(
+    #         payload, message.topic, str(message.qos)))
 
 def on_unsubscribe(unused_client, unused_userdata, unused_mid):
-    """Paho callback when a message is sent to the broker."""
+    """Paho callback when ___."""
     print('on_unsubscribe')
 
 def create_callback():
@@ -57,5 +54,4 @@ def create_callback():
         'on_unsubscribe' : on_unsubscribe,
         'on_log' : on_log,
     }
-
     return callbacks
