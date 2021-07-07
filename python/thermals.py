@@ -1,9 +1,11 @@
-from gpiozero import CPUTemperature
-import board
+from datetime import datetime
+# import time
+
 import adafruit_dht
-import time
-import datetime
-now = datetime.datetime.utcnow()
+import board
+from gpiozero import CPUTemperature
+
+now = datetime.utcnow()
 
 try:
     dhtDevice = adafruit_dht.DHT11(board.D4)
