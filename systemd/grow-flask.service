@@ -1,14 +1,20 @@
 [Unit]
-Description=Grow Flask Sensor API
+Description=Grow Flask Sensor Service
+Requires=gunicorn.socket
 After=network.target
 
 [Service]
-User=root
-WorkingDirectory=/home/pi/grow-node
-Environment=FLASK_APP=/home/pi/grow-node/ui/app.py
-ExecStart=flask run --host=0.0.0.0
-Restart=always
+Type=notify
 User=pi
+Group=users
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/pi/grow-node/ui
+# Environment="PATH=/home/sammy/myproject/myprojectenv/bin"
+ExecStart=/home/pi/.pyenv/shims/gunicorn app.wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
