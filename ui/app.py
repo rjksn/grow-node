@@ -37,7 +37,7 @@ def track(cloud=None):
         messages = []
         now = dt.now()
         for name, value in zip(names, values):
-            messages.append((now, f"sensor_{name}", float(value)))
+            messages.append((now.isoformat(), f"sensor_{name}", float(value)))
         cloud.publish_messages(messages)
 
         return f"Connection: {enabled}\n" + "\n".join(["{} : {:.2f}".format(*param[1:]) for param in messages])
