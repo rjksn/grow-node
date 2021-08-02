@@ -9,8 +9,7 @@ User=pi
 Group=users
 RuntimeDirectory=gunicorn
 WorkingDirectory=/home/pi/grow-node/ui
-# Environment="PATH=/home/sammy/myproject/myprojectenv/bin"
-ExecStart=/home/pi/.pyenv/shims/gunicorn app.wsgi
+ExecStart=/home/pi/.pyenv/shims/gunicorn wsgi:app
 ExecReload=/bin/kill -s HUP $MAINPID
 KillMode=mixed
 TimeoutStopSec=5
