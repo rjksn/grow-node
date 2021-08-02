@@ -1,6 +1,6 @@
 [Unit]
 Description=Grow Flask Sensor Service
-Requires=gunicorn.socket
+Requires=grow-flask.socket
 After=network.target
 
 [Service]
