@@ -38,7 +38,7 @@ def track(cloud=None):
         now = dt.now()
         for name, value in zip(names, values):
             messages.append({
-                "timestamp": now.isoformat(),
+                "device_timestamp": now.isoformat(),
                 "name": f"sensor_{name}",
                 "value": float(value)
                 })
