@@ -14,6 +14,6 @@ LABELS=("cpu_temp_1" "temp_1" "humid_1")
 THERMALS=(`/home/pi/.pyenv/shims/python3 $DIR/../python/thermals.py | sed 's/^[^,]*,//' | tr "\," "\n"`)
 
 for i in "${!THERMALS[@]}"; do
-    curl --data "name=${LABELS[i]}value=${THERMALS[i]}" http://localhost:8000/track
+	curl --data "name=${LABELS[i]}&value=${THERMALS[i]}" http://localhost:8000/track
 done
 
