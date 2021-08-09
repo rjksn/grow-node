@@ -37,11 +37,14 @@ def track(cloud=None):
         messages = []
         now = dt.now()
         for name, value in zip(names, values):
-            messages.append({
-                "device_timestamp": now.isoformat(),
-                "name": f"sensor_{name}",
-                "value": float(value)
-                })
+            try:
+                messages.append({
+                    "device_timestamp": now.isoformat(),
+                    "name": f"sensor_{name}",
+                    "value": float(value)
+                    })
+            except ValueError:
+                pass
         cloud.publish_messages(messages)
 
         return f"Connection: {enabled}\n" + "\n".join([
