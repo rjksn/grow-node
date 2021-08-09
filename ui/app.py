@@ -49,8 +49,8 @@ def track(cloud=None):
 
         cloud.publish_messages(messages)
 
-        return f"Connection: {enabled}\n" + "\n".join([
-                    "{} : {:.2f}".format(message["name"], message["value"]) for message in messages])
+        return f"Connection: {enabled}\n" + "\n".join(["{} : {:.2f}"
+                    .format(message.get('name', '(not-set)'), message.get("value", '(not-set)')) for message in messages])
 
     return "POST data as name=value= or name[]=value[]="
 
