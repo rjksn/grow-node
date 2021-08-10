@@ -16,6 +16,7 @@ def on_connect(unused_client, unused_userdata, unused_flags, rc):
 
 def on_disconnect(unused_client, unused_userdata, rc):
     """Paho callback for when a device disconnects."""
+    # Aug 10 01:24:30 pigrow gunicorn[5259]: on_disconnect 0: No error.
     print('on_disconnect', error_str(rc))
 
     # Since a disconnect occurred, the next loop iteration will wait with

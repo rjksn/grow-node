@@ -119,7 +119,6 @@ class CloudIot:
         Decorator Function
         '''
         def wrapped_f(*args, **kwargs):
-            print("about to call")
             kwargs['cloud'] = self
             return f(*args, **kwargs)
         return wrapped_f
@@ -199,9 +198,11 @@ class CloudIot:
             self._client.on_log = callbacks['on_log']
 
     def _token_update_loop(self, term_event):
+        print('Update token loop initiated')
         # Run in threads
         # Update token every 50 minutes (of allowed 60).
-        while not term_event.wait(50 * 60):
+        # while not term_event.wait(50 * 60):
+        while not term_event.wait(30 * 60):
             with self._mutex:
                 self._client.disconnect()
 
