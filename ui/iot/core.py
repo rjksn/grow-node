@@ -91,6 +91,8 @@ class CloudIot:
             username='unused', password=self._create_jwt())
 
         # Start thread to create new token before timeout.
+        print('Threading Start')
+        logger.info('Threading Start')
         self._term_event = threading.Event()
         self._token_thread = threading.Thread(
             target=self._token_update_loop, args=(self._term_event,))
@@ -203,6 +205,7 @@ class CloudIot:
         # Update token every 50 minutes (of allowed 60).
         # while not term_event.wait(50 * 60):
         while not term_event.wait(30 * 60):
+            logger.info('Attempting to re-established connection with new token')
             with self._mutex:
                 self._client.disconnect()
 
@@ -214,8 +217,7 @@ class CloudIot:
                 self._client.connect(
                     self._mqtt_bridge_hostname, self._mqtt_bridge_port)
 
-                logger.info(
-                    'Successfully re-established connection with new token')
+                logger.info('Successfully re-established connection with new token')
 
     def _create_jwt(self):
         """Creates a JWT (https://jwt.io) to establish an MQTT connection.

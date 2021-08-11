@@ -14,6 +14,12 @@ CONFIG_LOCATION = os.path.join(os.path.dirname(__file__), 'cloud_config.ini')
 #   - Sensor Data
 #   - Power Cycle
 
+# app.logger.debug('this is a DEBUG message')
+# app.logger.info('this is an INFO message')
+# app.logger.warning('this is a WARNING message')
+# app.logger.error('this is an ERROR message')
+# app.logger.critical('this is a CRITICAL message')
+
 @app.route('/')
 def hello():
     return "Hello World!"
@@ -26,12 +32,7 @@ def track(cloud=None):
     An endpoint for tracking statistics put out by the grow bot, and related wifi services.
     '''
     if request.method == 'POST':
-        print('Received request')
-        app.logger.debug('this is a DEBUG message')
-        app.logger.info('this is an INFO message')
-        app.logger.warning('this is a WARNING message')
-        app.logger.error('this is an ERROR message')
-        app.logger.critical('this is a CRITICAL message')
+        app.logger.info('Received sensor request')
         try:
             names = [request.form['name']]
             values = [request.form['value']]
@@ -51,13 +52,14 @@ def track(cloud=None):
                     "value": float(value)
                     })
             except ValueError:
-                pass
+                app.logger.warning(f"Caught sensor issue: name={name}, value={value}")
 
         cloud.publish_messages(messages)
 
         message = f"Connection: {enabled}\n" + "\n".join(["{} : {:.2f}"
                     .format(message.get('name', '(not-set)'), message.get("value", '(not-set)')) for message in messages])
-        app.logger.debug('message')
+
+        app.logger.info(message)
         return message
 
     return "POST data as name=value= or name[]=value[]="
