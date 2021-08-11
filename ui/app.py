@@ -26,6 +26,7 @@ def track(cloud=None):
     An endpoint for tracking statistics put out by the grow bot, and related wifi services.
     '''
     if request.method == 'POST':
+        print('Received request')
         try:
             names = [request.form['name']]
             values = [request.form['value']]
@@ -48,9 +49,10 @@ def track(cloud=None):
                 pass
 
         cloud.publish_messages(messages)
-
-        return f"Connection: {enabled}\n" + "\n".join(["{} : {:.2f}"
+        message = f"Connection: {enabled}\n" + "\n".join(["{} : {:.2f}"
                     .format(message.get('name', '(not-set)'), message.get("value", '(not-set)')) for message in messages])
+        print(message)
+        return message
 
     return "POST data as name=value= or name[]=value[]="
 
