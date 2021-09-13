@@ -36,7 +36,7 @@ def on_message(unused_client, unused_userdata, message):
 
 def on_log(unused_client, unused_userdata, message):
     """Callback when ___."""
-    print('on_publish')
+    print('on_log')
     # payload = str(message.payload.decode('utf-8'))
     # print('Received log \'{}\' on topic \'{}\' with Qos {}'.format(
     #         payload, message.topic, str(message.qos)))

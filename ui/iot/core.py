@@ -46,6 +46,7 @@ class CloudIot:
             config_section (str): The section name in the .ini file where the Cloud IoT Core config
                 can be read. By default, it reads from the "[DEFAULT]" section.
         """
+        logger.info('Initializing Google Core')
         self._config = configparser.ConfigParser()
         if not self._config.read(config_file):
             logger.warn('No valid config provided (reading %s).\nCloud IoT is disabled.' % config_file)
@@ -200,7 +201,7 @@ class CloudIot:
             self._client.on_log = callbacks['on_log']
 
     def _token_update_loop(self, term_event):
-        print('Update token loop initiated')
+        logger.info('Update token loop initiated')
         # Run in threads
         # Update token every 50 minutes (of allowed 60).
         # while not term_event.wait(50 * 60):
