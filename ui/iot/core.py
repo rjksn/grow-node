@@ -49,6 +49,7 @@ class CloudIot:
         logger.info('Initializing Google Core')
         self._config = configparser.ConfigParser()
         if not self._config.read(config_file):
+            print('No config file')
             logger.warn('No valid config provided (reading %s).\nCloud IoT is disabled.' % config_file)
             self._enabled = False
             return
