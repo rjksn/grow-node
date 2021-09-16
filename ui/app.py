@@ -26,7 +26,7 @@ def hello():
 
 
 @app.route('/track', methods = ['POST', 'GET'])
-@CloudIot(CONFIG_LOCATION)
+@CloudIot(CONFIG_LOCATION, logger=app.logger)
 def track(cloud=None):
     '''
     An endpoint for tracking statistics put out by the grow bot, and related wifi services.

@@ -26,8 +26,6 @@ import threading
 
 from iot.callbacks import create_callback
 
-logger = logging.getLogger(__name__)
-
 DEFAULT_CONFIG_LOCATION = os.path.join(os.path.dirname(__file__), '../cloud_config.ini')
 
 class CloudIot:
@@ -39,23 +37,24 @@ class CloudIot:
     you can use :meth:`publish_message` to send an arbitrary message to your cloud project.
     """
 
-    def __init__(self, config_file=DEFAULT_CONFIG_LOCATION, config_section='DEFAULT'):
+    def __init__(self, config_file=DEFAULT_CONFIG_LOCATION, logger=None):
         """
         Args:
             config_file (str): Path to your Cloud IoT configuration file (.ini).
             config_section (str): The section name in the .ini file where the Cloud IoT Core config
                 can be read. By default, it reads from the "[DEFAULT]" section.
         """
-        logger.info('Initializing Google Core')
+        self.logger = logger if not None else logging.getLogger(__name__)
+        self.logger.info('Initializing Google Core')
         self._config = configparser.ConfigParser()
         if not self._config.read(config_file):
             print('No config file')
-            logger.warn('No valid config provided (reading %s).\nCloud IoT is disabled.' % config_file)
+            self.logger.warn('No valid config provided (reading %s).\nCloud IoT is disabled.' % config_file)
             self._enabled = False
             return
 
         if not self._config.getboolean(config_section, 'Enabled'):
-            logger.warn('Cloud IoT is disabled per configuration.')
+            self.logger.warn('Cloud IoT is disabled per configuration.')
             self._enabled = False
             return
 
@@ -94,7 +93,7 @@ class CloudIot:
 
         # Start thread to create new token before timeout.
         print('Threading Start')
-        logger.info('Threading Start')
+        self.logger.info('Threading Start')
         self._term_event = threading.Event()
         self._token_thread = threading.Thread(
             target=self._token_update_loop, args=(self._term_event,))
@@ -107,7 +106,7 @@ class CloudIot:
         self._client.connect(self._mqtt_bridge_hostname,
                              self._mqtt_bridge_port)
 
-        logger.info('Successfully connected to Cloud IoT')
+        self.logger.info('Successfully connected to Cloud IoT')
         self._enabled = True
         self._client.loop_start()
         # The topic that the device will receive commands on.
@@ -202,12 +201,12 @@ class CloudIot:
             self._client.on_log = callbacks['on_log']
 
     def _token_update_loop(self, term_event):
-        logger.info('Update token loop initiated')
+        self.logger.info('Update token loop initiated')
         # Run in threads
         # Update token every 50 minutes (of allowed 60).
         # while not term_event.wait(50 * 60):
         while not term_event.wait(30 * 60):
-            logger.info('Attempting to re-established connection with new token')
+            self.logger.info('Attempting to re-established connection with new token')
             with self._mutex:
                 self._client.disconnect()
 
@@ -219,7 +218,7 @@ class CloudIot:
                 self._client.connect(
                     self._mqtt_bridge_hostname, self._mqtt_bridge_port)
 
-                logger.info('Successfully re-established connection with new token')
+                self.logger.info('Successfully re-established connection with new token')
 
     def _create_jwt(self):
         """Creates a JWT (https://jwt.io) to establish an MQTT connection.
