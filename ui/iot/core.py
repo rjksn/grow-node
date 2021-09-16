@@ -37,7 +37,7 @@ class CloudIot:
     you can use :meth:`publish_message` to send an arbitrary message to your cloud project.
     """
 
-    def __init__(self, config_file=DEFAULT_CONFIG_LOCATION, logger=None):
+    def __init__(self, config_file=DEFAULT_CONFIG_LOCATION, config_section="[DEFAULT]", logger=None):
         """
         Args:
             config_file (str): Path to your Cloud IoT configuration file (.ini).
