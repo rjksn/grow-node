@@ -24,9 +24,8 @@ CONFIG_LOCATION = os.path.join(os.path.dirname(__file__), 'cloud_config.ini')
 def hello():
     return "Hello World!"
 
-
 @app.route('/track', methods = ['POST', 'GET'])
-@CloudIot(CONFIG_LOCATION, logger=app.logger)
+@CloudIot(config_file=CONFIG_LOCATION, logger=app.logger)
 def track(cloud=None):
     '''
     An endpoint for tracking statistics put out by the grow bot, and related wifi services.
@@ -70,3 +69,4 @@ else:
     gunicorn_logger = logging.getLogger('gunicorn.error')
     app.logger.handlers = gunicorn_logger.handlers
     app.logger.setLevel(gunicorn_logger.level)
+    app.logger.info('Config location: %'.format(CONFIG_LOCATION))
