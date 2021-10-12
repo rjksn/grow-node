@@ -7,7 +7,8 @@ app = Flask(__name__)
 
 from iot.core import CloudIot
 
-CONFIG_LOCATION = os.path.join(os.path.dirname(__file__), 'cloud_config.ini')
+CONFIG_LOCATION = "/home/pi/grow-node/ui/cloud_config.ini"
+#CONFIG_LOCATION = os.path.join(os.path.dirname(__file__), 'cloud_config.ini')
 
 # Requirements:
 #   - Set Wifi Details if cannot connect
